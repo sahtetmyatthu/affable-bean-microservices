@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/masterLayout :: layout(~{::main})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main role="main">
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="d-flex flex-md-column mt-5">
+                    <a th:href="@{'/affable-bean/client/product?id=1'}" class="btn btn-warning px-3 mb-3">Diary</a>
+                    <a th:href="@{'/affable-bean/client/product?id=2'}" class="btn btn-warning px-3 mb-3">Meats</a>
+                    <a th:href="@{'/affable-bean/client/product?id=4'}" class="btn btn-warning px-3 mb-3">FruitVeg</a>
+                    <a th:href="@{'/affable-bean/client/product?id=3'}" class="btn btn-warning px-3 mb-3">Bakery</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <a th:href="@{/affable-bean/client/view-cart}"
+                        style="text-decoration: none!important;"> <h3><img size="25" th:src="@{/bootstrap/images/cart.gif}" class="me-3" alt=""><span class="text-muted" th:text="${cartSize}"></span></h3></a>
+                    </div>
+                </div>
+
+
+
+                <table id="table-bg" class="table table-warning">
+
+
+
+                    <tbody>
+                    <tr th:each="pro : ${products}">
+                        <td>
+                            <img th:src="@{'/bootstrap/images/products/'+${pro.name()+'.png'}}" alt="image">
+                        </td>
+                        <td>
+                            <p th:text="${pro.name()}"></p>
+                            <small class="text-muted" th:text="${pro.description()}"></small>
+                        </td>
+                        <td>
+                            $<span th:text="${pro.price()}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/affable-bean/client/add-to-cart?id='+${pro.id()}+'&cid='+${pro.categoryId()}}"
+                               class="btn btn-outline-success">Purchase</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: affable-bean-backend
+            uri: lb://AFFABLE-BEAN-BACKEND
+            predicates:
+              - Path=/products/**
+
+          - id: customer-order-store
+            uri: lb://CUSTOMER-ORDER-STORE-SERVICE
+            predicates:
+              - Path=/customer/store/**
+
+          - id: payment-gateway
+            uri: lb://PAYMENT-GATEWAY
+            predicates:
+              - Path=/payment/**
+
+          - id: affable-bean-ui
+            uri: lb://AFFABLE-BEAN-UI-SERVICE
+            predicates:
+              - Path=/affable-bean/client/**,/bootstrap/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8083/eureka
+server:
+  port: 8080

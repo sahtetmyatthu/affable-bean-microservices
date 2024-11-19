@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/masterLayout :: layout(~{::main})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main role="main">
+    <div  class="container mt-5">
+        <form th:action="@{/affable-bean/client/checkout}" th:object="${cartItem}" method="post">
+        <div class="d-flex justify-content-around mb-5">
+            <a th:href="@{/affable-bean/client/cart/clear}"
+               th:if="${!render}"
+               class="btn btn-secondary">Clear Cart</a>
+            <a th:href="@{/}"
+               th:if="${!render}"
+               class="btn btn-primary">Continue Shopping</a>
+            <input th:if="${!render}" type="submit" class="btn btn-success" value="Proceed to Checkout">
+            <a th:if="${render}" th:href="@{/affable-bean/client/checkout/view}" class="btn btn-success px-5">Checkout</a>
+            <h3>Total : <span th:text="${'$'+ totalPrice}"></span></h3>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-warning">
+                        <h3>Cart View</h3>
+                    </div>
+                    <table class="table table-warning">
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${cartItems}">
+                            <td>
+                                <img th:src="@{'/bootstrap/images/products/'+${item.getName()}+'.png'}"
+                                     alt="Image">
+                            </td>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${'$'+item.price}"></td>
+                            <td>
+                                <input type="text" th:if="${!render}"
+                                       th:field="*{cartItemQuantities}"
+                                class="form-control w-50">
+                                <span th:if="${render}" th:text="${item.quantity}"></span>
+                            </td>
+                            <td>
+                                <a th:if="${!render}" th:href="@{'/affable-bean/client/cart/remove?id='+${item.id}+'&cid='+${item.categoryId}}"
+                                class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>
